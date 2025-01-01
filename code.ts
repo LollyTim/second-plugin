@@ -9,6 +9,14 @@ figma.ui.onmessage = async (msg) => {
 
   console.log("Received message:", msg);
   if (msg.type === "actionGenerate") {
+    const {
+      circleSize,
+      colorCode,
+      colorName,
+      circleSpacing,
+      frameDirection,
+      tintNumber,
+    } = msg.formDataObj;
     console.log(msg.formDataObj);
     console.log("Generating action detected");
     figma.closePlugin("Tint Generated Successfully");
