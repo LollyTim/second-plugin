@@ -7,13 +7,13 @@ figma.showUI(__html__, {
 figma.ui.onmessage = async (msg) => {
   await figma.loadAllPagesAsync();
 
-  console.log("Received message:", msg); // Log the message to check what's being received
+  console.log("Received message:", msg);
   if (msg.type === "actionGenerate") {
     console.log(msg.formDataObj);
-    console.log("Generating action detected"); // Log when actionGenerate is detected
+    console.log("Generating action detected");
     figma.closePlugin("Tint Generated Successfully");
   } else if (msg.type === "actionExit") {
-    console.log("Exit action detected"); // Log when actionExit is detected
+    console.log("Exit action detected");
     figma.closePlugin();
   }
 };
