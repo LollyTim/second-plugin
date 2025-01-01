@@ -1,0 +1,80 @@
+<h1>Color Tint generator</h1>
+
+<form id="pluginForm">
+  <fieldset>
+    <legend>Color information</legend>
+    <p>
+      <label for="colorCode">Color</label>
+      <input type="color" id="colorCode" name="colorCode" value="#ff0000" />
+    </p>
+    <p>
+      <label for="colorName">Color Name</label>
+      <input type="text" id="colorName" name="colorName" value="Primary" />
+    </p>
+    <p>
+      <label for="tintNumber">Number of tints</label>
+      <input
+        type="number"
+        value="10"
+        min="1"
+        max="10"
+        id="tintNumber"
+        name="tintNumber"
+      />
+    </p>
+  </fieldset>
+
+  <fieldset>
+    <legend>Frame Information</legend>
+    <p>
+      <label for="circleSize">Circle Size</label>
+      <input
+        type="number"
+        value="120"
+        min="48"
+        id="circleSize"
+        name="circleSize"
+      />
+    </p>
+    <p>
+      <label> Choose the frame orientation</label>
+      <input type="radio" name="direction" id="frameH" checked />
+      <label for="frameH">Horizontal</label>
+      <input type="radio" name="direction" id="frameV" />
+      <label for="frameV">Vertical</label>
+    </p>
+  </fieldset>
+
+  <input type="hidden" name="frameDirection" value="horizontal" />
+
+  <button id="generate">Generate Tint</button>
+  <button id="cancle">Cancle</button>
+</form>
+
+<script>
+  document.getElementById("generate").onclick = (e) => {
+    let pluginForm = document.querySelector("#pluginform");
+
+    let pluginFormData = new FormData(pluginForm);
+
+    if (document.querySelector("#frameV").checked) {
+      pluginFormData.set("frameDirection", "vertical");
+    }
+
+    //create an object and populate it with the form data
+    let formDataObj = {};
+
+    for (let [key, value] of pluginFormData) {
+      formDataObj[key] = value;
+    }
+
+    parent.postMessage(
+      { pluginMessage: { type: "actionGenerate", formDataObj } },
+      "*"
+    );
+  };
+
+  document.getElementById("cancle").onclick = (e) => {
+    parent.postMessage({ pluginMessage: { type: "actionExit" } }, "*");
+  };
+</script>
